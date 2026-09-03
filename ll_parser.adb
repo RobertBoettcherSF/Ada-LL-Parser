@@ -175,7 +175,7 @@ package body Ll_Parser is
 
    type Symbol_Type is
      (Sym_E, Sym_E_Prime, Sym_T, Sym_T_Prime, Sym_F,
-      Sym_Id, Sym_Num, Sym_Plus, Sym_Star, Sym_Lparen, Sym_Rparen, Sym_Eof, Sym_Eps);
+      Sym_Id, Sym_Num, Sym_Plus, Sym_Star, Sym_Lparen, Sym_Rparen, Sym_Eof);
 
    function Map_Token_To_Symbol (K : Token_Kind) return Symbol_Type is
    begin
@@ -321,6 +321,7 @@ package body Ll_Parser is
                   when 2 =>
                      Push_Sym (Sym_E_Prime);
                      Push_Sym (Sym_T);
+                     Push_Sym (Sym_Plus);
                   when 3 =>
                      null;
                   when 4 =>
@@ -329,6 +330,7 @@ package body Ll_Parser is
                   when 5 =>
                      Push_Sym (Sym_T_Prime);
                      Push_Sym (Sym_F);
+                     Push_Sym (Sym_Star);
                   when 6 =>
                      null;
                   when 7 =>
