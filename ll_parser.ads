@@ -36,20 +36,17 @@ package Ll_Parser is
    -- Variant 1: Table-Driven LL(1) Parser
    -- Uses an explicit parse stack and a predictive parsing table.
    function Parse_Table_Driven (Tokens : Token_Array) return Integer
-     with Pre  => Tokens'Length > 0,
-          Post => True;
+     with Pre  => Tokens'Length > 0;
 
    -- Variant 2: Recursive Descent LL(1) Parser
    -- Uses mutually recursive functions corresponding to grammar non-terminals.
    function Parse_Recursive_Descent (Tokens : Token_Array) return Integer
-     with Pre  => Tokens'Length > 0,
-          Post => True;
+     with Pre  => Tokens'Length > 0;
 
    -- Variant 3: Lookahead LL(k) Parser
    -- Uses up to k tokens of lookahead to resolve grammar paths.
    function Parse_Lookahead_K (Tokens : Token_Array; Lookahead_Depth : Positive := 2) return Integer
-     with Pre  => Tokens'Length > 0 and then Lookahead_Depth in 1 .. 2,
-          Post => True;
+     with Pre  => Tokens'Length > 0 and then Lookahead_Depth in 1 .. 2;
 
    -- Lexical analyzer helper function
    function Tokenize (Input : String) return Token_Array;
