@@ -291,7 +291,7 @@ package body Ll_Parser is
                      end if;
 
                   when Sym_T_Prime =>
-                     if T_Sym = Sym_Plus | Sym_Rparen | Sym_Eof then
+                     if T_Sym in Sym_Plus | Sym_Rparen | Sym_Eof then
                         Rule := 6;
                      elsif T_Sym = Sym_Star then
                         Rule := 5;
