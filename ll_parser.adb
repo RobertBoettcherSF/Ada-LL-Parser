@@ -211,18 +211,13 @@ package body Ll_Parser is
          Sym_Stack (Sym_Top) := S;
       end Push_Sym;
 
-      function Pop_Sym return Symbol_Type is
+      procedure Drop_Sym is
       begin
          if Sym_Top = 0 then
             raise Syntax_Error with "Symbol stack underflow";
          end if;
-         declare
-            S : constant Symbol_Type := Sym_Stack (Sym_Top);
-         begin
-            Sym_Top := Sym_Top - 1;
-            return S;
-         end;
-      end Pop_Sym;
+         Sym_Top := Sym_Top - 1;
+      end Drop_Sym;
 
       procedure Push_Val (V : Integer) is
       begin
@@ -235,7 +230,6 @@ package body Ll_Parser is
 
       Current_Tok : Token;
       Current_Sym : Symbol_Type;
-      Dummy_Sym   : Symbol_Type;
    begin
       Push_Sym (Sym_Eof);
       Push_Sym (Sym_E);
@@ -253,7 +247,7 @@ package body Ll_Parser is
 
          if Current_Sym = Sym_Eof then
             if Current_Tok.Kind = Tok_Eof then
-               Dummy_Sym := Pop_Sym;
+               Drop_Sym;
             else
                raise Syntax_Error with "Expected end of input in table-driven parser";
             end if;
@@ -262,7 +256,7 @@ package body Ll_Parser is
                Expected_Term : constant Symbol_Type := Map_Token_To_Symbol (Current_Tok.Kind);
             begin
                if Current_Sym = Expected_Term then
-                  Dummy_Sym := Pop_Sym;
+                  Drop_Sym;
                   if Current_Tok.Kind = Tok_Num then
                      Push_Val (Current_Tok.Val);
                   elsif Current_Tok.Kind = Tok_Id then
@@ -320,7 +314,7 @@ package body Ll_Parser is
                   raise Syntax_Error with "No rule found in LL(1) parsing table";
                end if;
 
-               Dummy_Sym := Pop_Sym;
+               Drop_Sym;
 
                case Rule is
                   when 1 =>
@@ -366,11 +360,8 @@ package body Ll_Parser is
    --------------------------
 
    function Parse_Lookahead_K (Tokens : Token_Array; Lookahead_Depth : Positive := 2) return Integer is
-      Dummy_Depth : constant Positive := Lookahead_Depth;
+      pragma Unreferenced (Lookahead_Depth);
    begin
-      if Dummy_Depth > 0 then
-         null;
-      end if;
       return Parse_Recursive_Descent (Tokens);
    end Parse_Lookahead_K;
 
