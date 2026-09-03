@@ -62,9 +62,7 @@ package body Ll_Parser is
       Count := Count + 1;
       Temp (Count) := (Kind => Tok_Eof);
 
-      return Result : constant Token_Array (1 .. Count) do
-         Result := Temp (1 .. Count);
-      end return;
+      return Temp (1 .. Count);
    end Tokenize;
 
    -----------------------------
