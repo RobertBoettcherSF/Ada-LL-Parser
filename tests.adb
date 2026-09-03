@@ -32,9 +32,12 @@ begin
       Error_Raised : Boolean := False;
    begin
       begin
-         if Parse_Recursive_Descent (Tokenize ("3 $ 5")) = 0 then
+         declare
+            Dummy : constant Integer := Parse_Recursive_Descent (Tokenize ("3 $ 5"));
+            pragma Unreferenced (Dummy);
+         begin
             null;
-         end if;
+         end;
       exception
          when Lexical_Error =>
             Error_Raised := True;
@@ -98,9 +101,12 @@ begin
       Error_Raised : Boolean := False;
    begin
       begin
-         if Parse_Recursive_Descent (Tokenize ("3 + * 5")) = 0 then
+         declare
+            Dummy : constant Integer := Parse_Recursive_Descent (Tokenize ("3 + * 5"));
+            pragma Unreferenced (Dummy);
+         begin
             null;
-         end if;
+         end;
       exception
          when Syntax_Error =>
             Error_Raised := True;
@@ -152,9 +158,12 @@ begin
       Error_Raised : Boolean := False;
    begin
       begin
-         if Parse_Table_Driven (Tokenize ("3 +")) = 0 then
+         declare
+            Dummy : constant Integer := Parse_Table_Driven (Tokenize ("3 +"));
+            pragma Unreferenced (Dummy);
+         begin
             null;
-         end if;
+         end;
       exception
          when Syntax_Error =>
             Error_Raised := True;
